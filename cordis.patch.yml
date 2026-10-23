@@ -1,0 +1,6 @@
+- insert:
+    - id: daiyi-aimy-skill
+      name: dsh-daiyi-aimy-skill
+      config:
+        mode: rookie
+        persistScope: true

@@ -1,0 +1,83 @@
+{
+  "name": "dsh-daiyi-aimy-skill",
+  "version": "3.0.0",
+  "description": "AI 小秘 (aimy-skill) v3 — 授权渗透测试辅助插件 for DeepSeek Harness: 原生 Cordis 工具、范围护栏、并发探测引擎、技能包与报告。Redeveloped from zxz0119/aimy-sikll.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "skills",
+    "docs",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": "^22.19 || >=24",
+    "dsh": ">=0.2.0-rc.1 <0.3.0"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\"",
+    "check": "node scripts/validate-plugin.mjs && node scripts/check-syntax.mjs",
+    "verify": "npm run check && npm test"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "deepseek-harness",
+    "aimy",
+    "aimy-skill",
+    "security",
+    "pentest",
+    "recon",
+    "vulnerability-scanner",
+    "authorized-testing"
+  ],
+  "author": "戴亿 <1703205607@qq.com>",
+  "contributors": [
+    {
+      "name": "戴亿",
+      "email": "1703205607@qq.com",
+      "url": "https://github.com/DaiYiqq"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaiYiqq/dsh-daiyi-aimy-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DaiYiqq/dsh-daiyi-aimy-skill/issues"
+  },
+  "homepage": "https://github.com/DaiYiqq/dsh-daiyi-aimy-skill#readme",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.0",
+    "@deepseek-ai/dsh-skill": "^0.2.0-rc.1",
+    "@deepseek-ai/dsh-tools": "^0.2.0-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-skill": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  }
+}

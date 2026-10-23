@@ -1,0 +1,34 @@
+# 依赖（本插件运行时零第三方依赖，仅本地开发测试可能需要）
+node_modules/
+
+# 测试与覆盖率产物
+coverage/
+.nyc_output/
+*.lcov
+
+# 日志与调试输出
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+report.json
+report.sarif
+reports/
+
+# 编辑器与操作系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# 本地环境与临时文件
+.env
+.env.*
+tmp/
+temp/
+*.tgz
+
+# 插件校验器的临时解包目录
+test/helpers/vendor/
