@@ -1,7 +1,7 @@
 # 架构说明 · dsh-daiyi-aimy-skill
 
 > 本文说明插件「由哪些层组成、一次工具调用怎么流动、加一个新检测模块要改哪里」。
-> 面向维护者；只想用插件请读 [README.zh.md](../README.zh.md)，想看参数请读 [TOOLS.md](TOOLS.md)。
+> 面向维护者；只想用插件请读 [README.md](../README.md)（[English](../README.en.md) / [繁體中文](../README.zh-TW.md) / [日本語](../README.ja.md)），想看参数请读 [TOOLS.md](TOOLS.md)。
 
 ## 1. 设计目标与不变量
 
@@ -326,7 +326,8 @@ dsh-daiyi-aimy-skill/
 ├── test/                   # 契约测试、引擎测试、技能测试
 ├── cordis.patch.yml        # 插件插入声明（id: daiyi-aimy-skill）
 ├── package.json            # ESM，零运行时依赖
-├── README.md / README.zh.md
+├── README.md               # 简体中文（主语言）
+├── README.en.md / README.zh-TW.md / README.ja.md   # 英 / 繁 / 日
 ├── CHANGELOG.md
 └── LICENSE
 ```

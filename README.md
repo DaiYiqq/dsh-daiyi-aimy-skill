@@ -1,54 +1,60 @@
 # dsh-daiyi-aimy-skill
 
 <p align="center">
+  <b>简体中文</b> ·
+  <a href="README.en.md">English</a> ·
+  <a href="README.zh-TW.md">繁體中文</a> ·
+  <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <a href="package.json"><img alt="Node" src="https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg"></a>
   <a href="package.json"><img alt="DSH" src="https://img.shields.io/badge/DSH-%3E%3D0.2.0--rc.1-6f42c1.svg"></a>
   <img alt="dependencies" src="https://img.shields.io/badge/runtime%20deps-0-success.svg">
   <a href="https://github.com/zxz0119/aimy-sikll"><img alt="upstream" src="https://img.shields.io/badge/upstream-aimy--sikll%20v2.0.0-orange.svg"></a>
-  <a href="README.zh.md"><img alt="中文" src="https://img.shields.io/badge/docs-中文-lightgrey.svg"></a>
 </p>
 
-> **Authorized-scope reconnaissance and web vulnerability detection for DeepSeek Harness: 8 native tools + 8 skills, deny-by-default, detection only.**
+> **为 DeepSeek Harness 提供「授权范围内」的侦察与 Web 漏洞检测能力：8 个原生工具 + 8 个技能，默认拒绝，只做检测。**
 
-`dsh-daiyi-aimy-skill` is a **DeepSeek Harness (DSH) Cordis plugin** redeveloped from [zxz0119/aimy-sikll](https://github.com/zxz0119/aimy-sikll) (Python CLI, v2.0.0). It turns the upstream command-line scripts into resident native tools and adds something upstream never had: an **authorization-scope gate**. With no registered scope, no network tool will run.
+`dsh-daiyi-aimy-skill` 是 [zxz0119/aimy-sikll](https://github.com/zxz0119/aimy-sikll)（Python CLI，v2.0.0）的 **DeepSeek Harness（DSH）Cordis 插件**再开发版。它把上游的命令行脚本改造成宿主内常驻的原生工具，并加上了上游没有的**授权范围护栏**：没有登记授权范围时，任何网络工具都不会执行。
 
-- Shape: ESM Cordis plugin, **zero runtime third-party dependencies** (only `node:` built-ins).
-- Host: DSH `>=0.2.0-rc.1 <0.3.0`; Node `^22.19 || >=24`.
-- Version: `3.0.0`, MIT, by 戴亿.
+- 形态：ESM Cordis 插件，运行时**零第三方依赖**（只用 `node:` 内置模块）。
+- 宿主：DSH `>=0.2.0-rc.1 <0.3.0`；Node `^22.19 || >=24`。
+- 版本：`3.0.0`，MIT，作者 戴亿。
 
-## Features
+## 特性
 
-| Feature | Description |
+| 特性 | 说明 |
 |---|---|
-| **8 model-callable tools** | scope, recon, ports, directory fuzzing, crawling, web scanning, JWT audit, reporting |
-| **Deny-by-default** | Every network target must be registered through `aimy_scope`; unregistered targets are refused with a hint |
-| **Authorization records & audit** | Each scope entry requires a written authorization note (≥ 8 chars), optional expiry, and audit-logged changes |
-| **12 detection + 3 recon modules** | Detection: sqli / xss / cmdi / ssti / ssrf / nosqli / lfi / cors / jwt / graphql / proto-pollution / headers; recon: crawler / param-miner / tech-fingerprint. Port and directory probing live in the tool layer |
-| **Single network egress** | All requests go through the guarded probe in `lib/http.js`: per-request scope check, budget, timeout, body cap, redirect re-check |
-| **8 Chinese skills** | authorized scope, recon workflow, web triage, auth & JWT, API & GraphQL, reporting, rookie mode, veteran mode |
-| **Three report formats** | Markdown / JSON / SARIF, redacted by default |
-| **Zero runtime dependencies** | No `requests`, no third-party HTTP client; host provides `dsh-tools` and `dsh-skill` |
-| **Detection only** | No reverse shells, deserialization exploit chains, SSRF pivoting, OOB callbacks, or WAF bypass |
-| **No UI panel** | Tools, skills and report files only; there is no graphical interface |
+| **8 个模型可调用工具** | 范围管理、侦察、端口、目录、爬虫、Web 检测、JWT 审计、报告 |
+| **默认拒绝（deny-by-default）** | 任何网络目标必须先 `aimy_scope` 登记，未登记直接拒绝并提示下一步 |
+| **授权依据与审计** | 登记必须写授权说明（≥ 8 字符），范围可设过期时间，变更写审计日志 |
+| **12 个检测模块 + 3 个侦察模块** | 检测：sqli / xss / cmdi / ssti / ssrf / nosqli / lfi / cors / jwt / graphql / proto-pollution / headers；侦察：crawler / param-miner / tech-fingerprint。端口与目录枚举在工具层实现 |
+| **单一网络出口** | 所有请求经 `lib/http.js` 护栏探针：逐请求 scope 校验、预算、超时、响应体截断、重定向复检 |
+| **8 个中文技能** | 授权范围、侦察、Web 判定、认证与 JWT、API 与 GraphQL、报告、菜鸟模式、老鸟模式 |
+| **三种报告格式** | Markdown / JSON / SARIF，报告默认脱敏 |
+| **零运行时依赖** | 不用 `requests`、不用第三方 HTTP 库；宿主提供 `dsh-tools` 与 `dsh-skill` |
+| **只做检测** | 不提供反弹 shell、反序列化利用链、SSRF 横向、OOB 带外、WAF 绕过等武器化能力 |
+| **无 UI 面板** | 只提供工具、技能与报告文件；没有图形界面 |
 
-## Install
+## 安装
 
-Prerequisites: DSH desktop (`>=0.2.0-rc.1 <0.3.0`) and Node `^22.19 || >=24`. No build step and no runtime dependencies.
+前置：DSH 桌面端（`>=0.2.0-rc.1 <0.3.0`）与 Node `^22.19 || >=24`。本插件没有构建步骤，也没有运行时依赖。
 
-### Option A: DSH plugin manager (recommended)
+### 方式 A：用 DSH 插件管理器（推荐）
 
-Open DSH desktop **Settings → Plugins** and use the plugin manager to install either:
+打开 DSH 桌面端「**设置 → 插件**」，用插件管理器安装：
 
-- **A local directory**: point it at this repository (which contains `package.json` and `cordis.patch.yml`).
-- **A git repository**: `https://github.com/DaiYiqq/dsh-daiyi-aimy-skill`.
+- **本地目录**：选择本仓库目录（含 `package.json` 与 `cordis.patch.yml`）。
+- **git 仓库**：填 `https://github.com/DaiYiqq/dsh-daiyi-aimy-skill`。
 
-After install, the plugin manager's reconcile reads this package's `dsh.bundle.patch` and adds the `cordis.patch.yml` insert entry (`id: daiyi-aimy-skill`) to the profile.
+安装后插件管理器的 reconcile 会读取本包的 `dsh.bundle.patch`，把 `cordis.patch.yml` 的 insert 项（`id: daiyi-aimy-skill`）写入 profile。
 
-### Option B: manual plugin directory
+### 方式 B：手动放进插件目录
 
-1. Put this directory under your DSH plugins directory (e.g. `~/.dsh/plugins/dsh-daiyi-aimy-skill`).
-2. Add it to the profile's `package.json` dependencies:
+1. 把本目录放到 DSH 插件目录下（例如 `~/.dsh/plugins/dsh-daiyi-aimy-skill`）。
+2. 在 profile 的 `package.json` 的 `dependencies` 中加入：
 
    ```json
    {
@@ -56,24 +62,24 @@ After install, the plugin manager's reconcile reads this package's `dsh.bundle.p
    }
    ```
 
-   > The part after `file:` must be an **absolute path** on your machine; the `~/...` above is illustrative.
-3. Run `pnpm install` in the profile directory.
-4. Restart / reload DSH. Because this package declares `dsh.bundle.patch`, the plugin manager's reconcile adds the package name to `dsh.profile.bundles`.
+   > `file:` 后面写**本机绝对路径**；上面的 `~/...` 只是示意。
+3. 在 profile 目录执行 `pnpm install`。
+4. 重启 / 重新加载 DSH。插件管理器 reconcile 时会因为本包声明了 `dsh.bundle.patch`，把包名加入 `dsh.profile.bundles`。
 
-When loaded, the session exposes 8 `aimy_*` tools and 8 `aimy-*` skills.
+安装成功后，会话里能看到 8 个 `aimy_*` 工具，技能目录里出现 8 个 `aimy-*` 技能。
 
-## Quick start (5 lines)
+## 快速开始（5 行）
 
 ```text
-// Step 1: register the authorized scope — without it every network tool refuses
-aimy_scope(action="add", target="example.com", authorization="Client authorization letter #A-1024, scope: example.com", expiresInHours=72)
+// 第 1 步：登记授权范围——不登记，后面所有网络工具都会拒绝
+aimy_scope(action="add", target="example.com", authorization="客户授权函 #A-1024，范围 example.com 全站", expiresInHours=72)
 aimy_recon(target="https://example.com")
 aimy_crawl(target="https://example.com/", maxPages=10)
 aimy_web_scan(target="https://example.com/search?q=test", checks=["xss", "sqli"])
 aimy_report(action="report", format="md", outputPath="reports/example-com.md")
 ```
 
-A full tool-call result (truncated):
+一次完整调用的返回示例（节选）：
 
 ```json
 {
@@ -85,73 +91,73 @@ A full tool-call result (truncated):
     {
       "module": "xss",
       "checkId": "xss-reflected",
-      "title": "Reflected XSS (HTML context)",
+      "title": "反射型 XSS（HTML 上下文）",
       "severity": "high",
       "confidence": "high",
       "url": "https://example.com/search?q=test",
       "param": "q",
       "payload": "aimy1337<script>alert(1)</script>",
-      "evidence": "Parameter q was reflected verbatim in an HTML context; the payload appeared unencoded in the response (200).",
+      "evidence": "参数 q 在 HTML 上下文原样回显；payload「…」未编码出现在响应中。响应 200，片段：<div>…</div>",
       "cwe": "CWE-79",
-      "remediation": "Apply context-aware HTML/attribute/JS encoding, allowlist filtering, and CSP as defense in depth."
+      "remediation": "按输出上下文做 HTML/属性/JS 编码，使用白名单过滤，并配置 CSP 作为纵深防御。"
     }
   ],
   "requests": 9,
-  "notes": ["runId=run-1a2b3c4d", "mode=rookie"]
+  "notes": ["runId=run-1a2b3c4d", "模式=rookie"]
 }
 ```
 
-> The finding above only illustrates the field shape; it does not claim that `example.com` has this issue. Actual output depends on your target and config.
+> 上面的 finding 仅用于展示字段形状，不代表 `example.com` 真的存在该问题。实际返回以你的目标与配置为准。
 
-## Tools
+## 工具
 
-| Tool | Purpose | Requires scope |
+| 工具 | 作用 | 需要授权范围 |
 |---|---|---|
-| `aimy_scope` | Add / list / remove / clear authorized scope; dry-run a target | No (it is the gate) |
-| `aimy_recon` | DNS, HTTP baseline, security headers, tech fingerprint, robots.txt | Yes |
-| `aimy_port_scan` | TCP connect port probe (handshake only), risky-port findings | Yes |
-| `aimy_dir_fuzz` | Path enumeration with soft-404 baseline and sensitive-path findings | Yes |
-| `aimy_crawl` | Same-origin crawl: pages, links, forms, params, JS endpoints | Yes |
-| `aimy_web_scan` | Run a set of web checks (12 check types) against one URL | Yes |
-| `aimy_jwt_audit` | Offline JWT audit: alg, weak secrets, claims, external key sources | No (local only) |
-| `aimy_report` | Summarize, list findings, export Markdown / JSON / SARIF | No |
+| `aimy_scope` | 登记 / 查看 / 移除 / 清空授权范围，试判目标是否放行 | 否（闸门本身） |
+| `aimy_recon` | DNS、HTTP 基线、安全响应头、技术栈指纹、robots.txt | 是 |
+| `aimy_port_scan` | TCP 端口连通性探测（仅握手），高危端口暴露告警 | 是 |
+| `aimy_dir_fuzz` | 路径/目录枚举，软 404 基线过滤，敏感路径告警 | 是 |
+| `aimy_crawl` | 同源爬取：页面、链接、表单、参数、JS 接口路径 | 是 |
+| `aimy_web_scan` | 一次跑一组 Web 检测（12 类 checks，见文档） | 是 |
+| `aimy_jwt_audit` | 离线 JWT 审计：算法、弱密钥、声明、外部密钥源 | 否（纯本地） |
+| `aimy_report` | 汇总、列发现、导出 Markdown / JSON / SARIF | 否 |
 
-Full parameter tables, return shapes, error codes and limits: [docs/TOOLS.md](docs/TOOLS.md).
+完整参数表、返回形状、错误码与限制见 [docs/TOOLS.md](docs/TOOLS.md)。
 
-## Skills
+## 技能
 
-| Skill | When to load |
+| 技能 | 何时加载 |
 |---|---|
-| `aimy-authorized-scope` | Session start, target change/expansion, or a `NO_SCOPE` / `NO_MATCH` / `EXPIRED` / `PRIVATE_BLOCKED` result |
-| `aimy-recon-workflow` | Scope registered and you need the asset map: hosts, ports, directories, pages, params, tech |
-| `aimy-web-vuln-triage` | You have a parameterized URL and must decide if a web finding is real and how severe |
-| `aimy-auth-and-jwt` | Login state, Bearer tokens, JWTs, session or object-level authorization questions |
-| `aimy-api-and-graphql` | `/api`, `/graphql`, `/swagger` style interfaces exist |
-| `aimy-finding-report` | A scan round is done and you need a report or CI-ready SARIF |
-| `aimy-rookie-mode` | Beginners, production targets, or `mode=rookie` |
-| `aimy-veteran-mode` | Clear authorization, staging/lab targets, higher coverage and chained checks |
+| `aimy-authorized-scope` | 会话开始、切换/扩大目标，或工具返回 `NO_SCOPE` / `NO_MATCH` / `EXPIRED` / `PRIVATE_BLOCKED` |
+| `aimy-recon-workflow` | 范围已登记，需要摸清域名、端口、目录、页面、参数与技术栈 |
+| `aimy-web-vuln-triage` | 已有带参数的 URL，需要判定 Web 漏洞真伪与定级 |
+| `aimy-auth-and-jwt` | 目标有登录态、Bearer token、JWT，或要验证会话与对象级授权 |
+| `aimy-api-and-graphql` | 存在 `/api`、`/graphql`、`/swagger` 等接口面 |
+| `aimy-finding-report` | 一轮检测结束，需要出报告或给 CI 出 SARIF |
+| `aimy-rookie-mode` | 新手、生产环境，或 `mode=rookie` 时 |
+| `aimy-veteran-mode` | 授权明确、预发/靶场，需要更高覆盖与链式验证时 |
 
-Skills are **method guidance**: they do not auto-run tools and cannot bypass `aimy_scope`.
+技能是**方法指导**，不会自动执行工具，也不能绕过 `aimy_scope`。
 
-## Upgrade from upstream
+## 与上游的升级对照
 
-| Dimension | Upstream `aimy-sikll` v2.0.0 | This plugin v3.0.0 |
+| 维度 | 上游 `aimy-sikll` v2.0.0 | 本插件 v3.0.0 |
 |---|---|---|
-| Shape | Python CLI, `python main.py <subcommand>` | DSH Cordis plugin, tools called by the model |
-| Authorization | Input a target, start probing | Deny-by-default; register scope first |
-| Network egress | Each module uses `requests` freely | Single guarded probe with per-request scope checks |
-| Output | JSON printed to the terminal | Structured returns + three report formats |
-| Dependencies | `requests`, etc. | Zero runtime third-party deps |
-| Session | `.pkl` session files | Stateless; no credential storage |
-| Concurrency | Thread pool | Bounded concurrency + request budget + cancellation |
-| Weaponization | Present (reverse shells, data dumping, pivoting, …) | **Not provided**; those modules are not ported |
-| Skills | 101 Markdown files | Curated into 8 executable playbooks |
+| 形态 | Python CLI，`python main.py <子命令>` | DSH Cordis 插件，模型直接调用工具 |
+| 授权 | 输入目标即探测 | deny-by-default，先登记范围再探测 |
+| 网络出口 | 各模块各自用 `requests` | 唯一护栏探针，逐请求 scope 校验 |
+| 输出 | 终端 JSON 文本 | 结构化返回值 + 三种格式报告 |
+| 依赖 | `requests` 等 | 零运行时第三方依赖 |
+| 会话 | `.pkl` 会话文件 | 无状态，不保存凭据 |
+| 并发 | 线程池 | 受控并发 + 请求预算 + 取消 |
+| 武器化 | 有（反弹 shell、拖库、横向等） | **不提供**，对应模块不移植 |
+| 技能 | 101 份 Markdown | 精选重写为 8 个可执行 playbook |
 
-See [docs/MIGRATION.md](docs/MIGRATION.md) for the per-module disposition of all 34 upstream files (ported / merged / partially absorbed / not ported, with reasons) and the CLI-to-tool mapping.
+34 个上游模块的逐项处置（移植 / 合并 / 只吸收部分 / 不移植及原因）与 CLI 命令对照见 [docs/MIGRATION.md](docs/MIGRATION.md)。
 
-## Configuration
+## 配置
 
-Configuration comes from `cordis.patch.yml` `config`, merged with defaults; invalid values fall back and produce warnings.
+配置来自 `cordis.patch.yml` 的 `config`，与默认值合并；非法值回退默认并记录 warning。
 
 ```yaml
 - insert:
@@ -162,84 +168,87 @@ Configuration comes from `cordis.patch.yml` `config`, merged with defaults; inva
         persistScope: true
 ```
 
-| Key | Type | Default | Description |
+| 配置项 | 类型 | 默认 | 说明 |
 |---|---|---|---|
-| `mode` | `rookie` \| `veteran` | `rookie` | Runtime mode; changes budgets and payload aggressiveness only, never the authorization boundary |
-| `persistScope` | boolean | `true` | Persist scope to disk; `false` keeps it in memory only |
-| `scopeFile` | string | `<DSH_HOME>/daiyi-aimy-skill/scope.json` | Scope file path |
-| `timeoutMs` | number | 8000 (rookie) / 12000 (veteran) | Per-request timeout, max 60000 |
-| `maxRequests` | number | 24 / 60 | Per-tool-call request budget, max 400 |
-| `concurrency` | number | 4 / 8 | Concurrency cap, max 32 |
-| `maxBodyBytes` | number | 262144 | Response body cap, max 4 MiB |
-| `followRedirects` | boolean | `false` | Do not follow redirects by default |
-| `maxRedirects` | number | 3 | Max hops when following |
-| `userAgent` | string | `dsh-daiyi-aimy-skill/3.0.0 (...)` | Default UA; targets can identify the tester |
-| `allowPrivateNetworks` | boolean | `false` | Allow loopback/private targets in scope |
-| `redactSecrets` | boolean | `true` | Redact suspected credentials in reports |
-| `maxFindings` | number | 800 | In-memory finding cap |
-| `maxRuns` | number | 60 | In-memory run-record cap |
+| `mode` | `rookie` \| `veteran` | `rookie` | 运行模式；只影响预算与 payload 激进度，不放宽授权边界 |
+| `persistScope` | boolean | `true` | 是否把授权范围写入磁盘；`false` 时仅进程内存、重启失效 |
+| `scopeFile` | string | `<DSH_HOME>/daiyi-aimy-skill/scope.json` | 授权范围文件路径 |
+| `timeoutMs` | number | 8000（rookie）/ 12000（veteran） | 单请求超时，上限 60000 |
+| `maxRequests` | number | 24 / 60 | 单次工具调用请求预算，上限 400 |
+| `concurrency` | number | 4 / 8 | 并发上限，上限 32 |
+| `maxBodyBytes` | number | 262144 | 响应体上限，最大 4 MiB |
+| `followRedirects` | boolean | `false` | 默认不跟随重定向 |
+| `maxRedirects` | number | 3 | 跟随时的最大跳数 |
+| `userAgent` | string | `dsh-daiyi-aimy-skill/3.0.0 (...)` | 默认 UA，目标可识别测试来源 |
+| `allowPrivateNetworks` | boolean | `false` | 是否允许登记/访问回环与内网地址 |
+| `redactSecrets` | boolean | `true` | 报告中对疑似凭据脱敏 |
+| `maxFindings` | number | 800 | 内存中最多保留的 finding 数 |
+| `maxRuns` | number | 60 | 内存中最多保留的运行记录数 |
 
-## Security & compliance
+## 安全与合规
 
-- **Detection only**: no reverse shells, deserialization exploit chains, SSRF pivoting, OOB callbacks, WAF bypass, data extraction, credential attacks, or MITM credential capture.
-- **Deny-by-default**: with no scope, every network tool refuses; each scope needs a written authorization note.
-- **Constrainable scope**: `host`, `host:port`, scheme, `*.` subdomain wildcards, path prefixes and expiry; loopback/private targets are blocked by default.
-- **No credential storage**: the plugin does not persist tokens, cookies or sessions; scope files contain no credentials.
-- **No detection-rate promises**: checks are response-difference heuristics and can miss or false-positive; a human with authorization must review conclusions.
-- **Lawful use**: only against targets with **written authorization**. Unauthorized probing, data extraction, persistence and denial of service are prohibited and outside the plugin's capabilities.
+- **只做检测**：不提供反弹 shell、反序列化利用链、SSRF 横向、OOB 带外回连、WAF 绕过、数据提取、凭据攻击、MITM 凭据捕获。
+- **默认拒绝**：没有授权范围时，所有网络工具直接拒绝；范围必须写明授权依据。
+- **范围可约束**：支持 `host`、`host:port`、scheme、`*.` 通配子域、路径前缀与过期时间；回环/内网默认禁止。
+- **不保存凭据**：插件不持久化 token/cookie/登录态；范围文件不记录凭据。
+- **不承诺检出率**：检测基于响应差异启发式，存在误报漏报；结论必须由有授权的人类复核。
+- **合法使用**：仅用于已获**书面授权**的目标。未授权探测、数据提取、持久化访问、拒绝服务等均被禁止，也不在插件能力范围内。
 
-Full authorization model, matching rules and reporting channel: [docs/SECURITY.md](docs/SECURITY.md).
+完整授权模型、匹配规则与漏洞报告渠道见 [docs/SECURITY.md](docs/SECURITY.md)。
 
-**Reporting a vulnerability in this plugin**: prefer a GitHub Security Advisory or email `1703205607@qq.com`; please do not disclose details before a fix.
+**发现插件自身安全问题**：请优先通过 GitHub Security Advisory 或邮件 `1703205607@qq.com` 私下联系，修复前请勿公开细节。
 
-## Repository layout
+## 目录结构
 
 ```text
 dsh-daiyi-aimy-skill/
 ├── lib/
-│   ├── index.js            # plugin entry: name / inject / apply
-│   ├── config.js           # config normalization and mode budgets
-│   ├── scope.js            # authorization scope: parse, match, persist, audit
-│   ├── http.js             # guarded HTTP probe (single network egress)
-│   ├── store.js            # findings store, dedupe, run records
-│   ├── report.js           # Markdown / JSON / SARIF renderers
-│   ├── tools/              # 8 model-callable tools
-│   ├── engine/             # detection modules + catalog
-│   └── skills/             # skill loader
-├── skills/                 # 8 aimy-* skills (SKILL.md)
+│   ├── index.js            # 插件入口：name / inject / apply
+│   ├── config.js           # 配置归一化与模式预算
+│   ├── scope.js            # 授权范围：解析、匹配、持久化、审计
+│   ├── http.js             # 护栏 HTTP 探针（唯一网络出口）
+│   ├── store.js            # Finding 存储、去重、运行记录
+│   ├── report.js           # Markdown / JSON / SARIF 渲染
+│   ├── tools/              # 8 个模型可调用工具
+│   ├── engine/             # 12 个检测模块 + 3 个侦察模块 + 注册表
+│   └── skills/             # 技能加载器
+├── skills/                 # 8 个 aimy-* 技能（SKILL.md）
 ├── docs/                   # TOOLS / MIGRATION / SECURITY / ARCHITECTURE / CONTRACT
-├── scripts/                # validate-plugin.mjs contract checks
-├── test/                   # contract, engine and skill tests
+├── scripts/                # validate-plugin.mjs 契约校验
+├── test/                   # 契约测试、引擎测试、技能测试
 ├── cordis.patch.yml
 ├── package.json
-├── README.md / README.zh.md
+├── README.md               # 简体中文（主语言）
+├── README.en.md            # English
+├── README.zh-TW.md         # 繁體中文
+├── README.ja.md            # 日本語
 ├── CHANGELOG.md
 └── LICENSE
 ```
 
-## Development & testing
+## 开发与测试
 
-Node `^22.19 || >=24`. **Zero third-party dependencies**, so `npm install` is not needed.
+要求 Node `^22.19 || >=24`。**零第三方依赖**，因此不需要 `npm install`。
 
 ```bash
-npm run check     # contract validation + node --check lib/index.js
-npm test          # node --test "test/**/*.test.js" (recursive)
-npm run verify    # check + test (what CI runs)
+npm run check     # 契约校验 + 全仓语法检查
+npm test          # node --test "test/**/*.test.js"（递归）
+npm run verify    # check + test（CI 跑的就是这一条）
 ```
 
-Check a single file:
+单独校验某个文件：
 
 ```bash
 node --check lib/http.js
 node --test test/engine/sqli.test.js
 ```
 
-CI: [.github/workflows/ci.yml](.github/workflows/ci.yml) — `ubuntu-latest` + Node 24, runs only `npm run verify`, no extra install steps.
+CI：[.github/workflows/ci.yml](.github/workflows/ci.yml)，`ubuntu-latest` + Node 24，只跑 `npm run verify`，不做额外安装。
 
-Design notes and how to add a detection module: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+更多设计说明见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)；新增检测模块的步骤也在那里。
 
-## License
+## 许可证
 
 [MIT](LICENSE) © 2026 戴亿 <1703205607@qq.com>
 
-Upstream `aimy-sikll` is also MIT-licensed. This plugin is an independent redevelopment, not an official upstream release.
+上游项目 `aimy-sikll` 同为 MIT 许可证；本插件是独立再开发，不是上游的官方发行版。

@@ -15,7 +15,9 @@
     "docs",
     "cordis.patch.yml",
     "README.md",
-    "README.zh.md",
+    "README.en.md",
+    "README.zh-TW.md",
+    "README.ja.md",
     "CHANGELOG.md",
     "LICENSE"
   ],

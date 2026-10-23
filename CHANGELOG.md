@@ -8,6 +8,13 @@
 
 ## [Unreleased]
 
+### 文档
+
+- README 多语言化：简体中文（主语言，`README.md`）、English（`README.en.md`）、繁體中文（`README.zh-TW.md`）、日本語（`README.ja.md`），四份文档顶部都有语言切换栏。
+- 修正仓库 About 简介的中文编码（此前提交时被按 ASCII 发送，中文变成问号）。
+- `npm run check` 改为「契约校验 + 全仓语法检查」（新增 `scripts/check-syntax.mjs`）。
+
+
 ## [3.0.0] - 2026-10-23
 
 首个 DSH 插件版本。相对上游 v2.0.0，这是一次**形态重写**而不只是加壳：从「命令行脚本」变成「常驻宿主、由模型调用的 Cordis 插件」。
